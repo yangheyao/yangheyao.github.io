@@ -88,15 +88,16 @@
 <li><p>编译kernel命令</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./device/amlogic/common/quick_build_kernel.sh bootimage -j2</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>上下层接口，底层通过ioctl进行参数传递</p>
+<li><p>上下层接口，底层通过ioctl进行参数传递<br>通过pi_ioctl函数来进行switch选择</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">file_operations</span> <span class="title">pi_fops</span> = &#123;</span></span><br><span class="line">  .owner = THIS_MODULE,</span><br><span class="line">  .open = pi_open,</span><br><span class="line">  .read = pi_read,</span><br><span class="line">  .write = pi_write,</span><br><span class="line">  .release = pi_release,</span><br><span class="line">  .unlocked_ioctl = pi_ioctl,</span><br><span class="line">  #ifdef CONFIG_COMPAT</span><br><span class="line">  .compat_ioctl = pi_compat_ioctl,</span><br><span class="line">  #endif</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">long</span> <span class="title">pi_ioctl</span><span class="params">(struct file *file,<span class="keyword">unsigned</span> <span class="keyword">int</span> cmd,<span class="keyword">unsigned</span> <span class="keyword">long</span> arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>(cmd)&#123;</span><br><span class="line">    <span class="keyword">case</span> CLOSE_DLP_LED:</span><br><span class="line">      printk(<span class="string">"close dlp led\n"</span>);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      printk(<span class="string">"default mode\n"</span>);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  printk(<span class="string">"%s----&gt;\n"</span>,__func__);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/28/projector/" data-id="cjixzuynv000114tzzl18jrzz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/28/projector/" data-id="cjiy1vqin0000u8tzw3hljvuf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cloudesteem-cn/">cloudesteem.cn</a></li></ul>
@@ -143,7 +144,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/28/hello-world/" data-id="cjixzuynp000014tzx8sx1b51" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/28/hello-world/" data-id="cjiy1vqiy0001u8tzj2rxts9k" class="article-share-link">Share</a>
       
       
     </footer>
