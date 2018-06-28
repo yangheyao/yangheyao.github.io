@@ -100,15 +100,18 @@
 <li><p>目前就是kernel里面基本就写完了ioctl的驱动，目前就是需要上层进行配对<br>在Codes_pwd/external/目录里面新建一个目录。如下</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir Codes_pwd/external/testioctl</span><br><span class="line"><span class="built_in">cd</span> Codes_pwd/external/testioctl/</span><br><span class="line">touch ioctl.c</span><br><span class="line">touch Android.mk</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>需要在</p>
-<pre><code>
-</code></pre></li>
+<li><p>开始编辑ioctl.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PIDIR <span class="meta-string">'c'</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CLOSE_DLP_LED _IOW(PIDIR,0x1,int)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> iomask = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span>((fd = open(<span class="string">"/dev/pi"</span>,O_RDWR)) &lt;<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Open error on /dev/pi\n"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  ioctl(fd,CLOSE_DLP_LED,iomask);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Android.mk</p>
+<figure class="highlight mk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_PATH := <span class="variable">$(<span class="built_in">call</span> my-<span class="built_in">dir</span>)</span></span><br><span class="line"><span class="keyword">include</span> <span class="variable">$(CLEAR_VARS)</span></span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_TAGS := eng</span><br><span class="line">LOCAL_SRC_FILES := ioctl.c</span><br><span class="line">LOCAL_MODULE := testioctl</span><br><span class="line">LOCAL_CPPFLAGS += -DANDROID</span><br><span class="line">LOCAL_SHARED_LIBRARIES := libc</span><br><span class="line"></span><br><span class="line">inclde <span class="variable">$(BUILD_EXECUTABLE)</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/28/projector/" data-id="cjiy6smrv0001wgtzzq3qu1um" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/28/projector/" data-id="cjiy7v1ct0000g4tz1n5uhqes" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cloudesteem-cn/">cloudesteem.cn</a></li></ul>
@@ -155,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/28/hello-world/" data-id="cjiy6smr80000wgtzr51c8wt9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/28/hello-world/" data-id="cjiy7v1d20001g4tzf5hcxzvd" class="article-share-link">Share</a>
       
       
     </footer>
